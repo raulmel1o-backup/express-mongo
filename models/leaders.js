@@ -8,6 +8,7 @@ const leadersSchema = new Schema({
     name: {
         type: String,
         required: true,
+        unique: true,
     },
     image: {
         type: String,
