@@ -16,7 +16,7 @@ dishRouter.route('/')
         
     .then(dishes => {
     
-        res.setHeader('Contente-Type', 'application/json');
+        res.setHeader('Content-Type', 'application/json');
         res.status(200).json(dishes);
 
     }, err => next(err))
@@ -32,12 +32,12 @@ dishRouter.route('/')
     .then(dish => {
     
         console.log(dish);
-        res.setHeader('Contente-Type', 'application/json');
+        res.setHeader('Content-Type', 'application/json');
         res.status(200).json(dish);
     
     }, err => next(err))
     
-    .catch(err => next(err))
+    .catch(err => next(err));
 
 })
 
@@ -54,12 +54,12 @@ dishRouter.route('/')
 
     .then(response => {
 
-        res.setHeader('Contente-Type', 'application/json');
+        res.setHeader('Content-Type', 'application/json');
         res.status(200).json(response);
 
     }, err => next(err))
 
-    .catch(err => next(err))
+    .catch(err => next(err));
 
 });
 
@@ -71,7 +71,7 @@ dishRouter.route('/:dishId')
     
     .then(dish => {
         
-        res.setHeader('Contente-Type', 'application/json');
+        res.setHeader('Content-Type', 'application/json');
         res.status(200).json(dish);
 
     }, err => next(err))
@@ -95,12 +95,12 @@ dishRouter.route('/:dishId')
     
     .then(dish => {
 
-        res.setHeader('Contente-Type', 'application/json');
+        res.setHeader('Content-Type', 'application/json');
         res.status(200).json(dish);
 
     }, err => next(err))
 
-    .catch(err => next(err))
+    .catch(err => next(err));
 
 })
 
@@ -110,12 +110,12 @@ dishRouter.route('/:dishId')
 
     .then(response => {
 
-        res.setHeader('Contente-Type', 'application/json');
+        res.setHeader('Content-Type', 'application/json');
         res.status(200).json(response);
 
     }, err => next(err))
 
-    .catch(err => next(err))
+    .catch(err => next(err));
 
 });
 
@@ -129,7 +129,7 @@ dishRouter.route('/:dishId/comments')
 
         if (dish) {
 
-            res.setHeader('Contente-Type', 'application/json');
+            res.setHeader('Content-Type', 'application/json');
             res.status(200).json(dish.comments);
 
         } else {
@@ -159,7 +159,7 @@ dishRouter.route('/:dishId/comments')
             
             .then(dish => {
 
-                res.setHeader('Contente-Type', 'application/json');
+                res.setHeader('Content-Type', 'application/json');
                 res.status(200).json(dish);
 
             }, err => next(err))
@@ -204,7 +204,7 @@ dishRouter.route('/:dishId/comments')
 
             .then(dish => {
 
-                res.setHeader('Contente-Type', 'application/json');
+                res.setHeader('Content-Type', 'application/json');
                 res.status(200).json(dish);
 
             }, err => next(err));
