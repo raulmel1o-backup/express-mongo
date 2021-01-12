@@ -1,7 +1,7 @@
 
 const auth = (req, res, next) => {
 
-    if (!req.signedCookies.user) {
+    if (!req.session.user) {
 
         const authHeader = req.headers.authorization;
 
@@ -42,7 +42,7 @@ const auth = (req, res, next) => {
 
     } else {
 
-        if (req.signedCookies.user === 'admin') {
+        if (req.session.user === 'admin') {
 
             next();
 
