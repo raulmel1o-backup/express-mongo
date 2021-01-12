@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node ./bin/www"
   },
   "author": "Raul Mello",
   "license": "ISC",
@@ -13,6 +13,7 @@
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "http-errors": "^1.7.2",
+    "jade": "^1.11.0",
     "mongoose": "^5.11.11",
     "mongoose-currency": "^0.2.0",
     "morgan": "^1.10.0"
