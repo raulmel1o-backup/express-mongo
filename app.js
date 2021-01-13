@@ -7,10 +7,10 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
-const Dishes = require('./models/dishes');
+const Dishes = require('./models/dish');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const usersRouter = require('./routes/userRouter');
 const dishRouter = require('./routes/dishRouter');
 const leaderRouter = require('./routes/leaderRouter');
 const promoRouter = require('./routes/promoRouter');
@@ -45,15 +45,13 @@ app.use(session({
 
 }));
 
-app.use(auth)
-
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/dishes', dishRouter);
 app.use('/promotions', promoRouter);
 app.use('/leaders', leaderRouter);
+app.use('/users', usersRouter);
+app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
