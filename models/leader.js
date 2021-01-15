@@ -16,7 +16,7 @@ const leadersSchema = new Schema({
     },
     designation: {
         type: String,
-        default: true,
+        required: true,
     },
     abbr: {
         type: String,
@@ -37,6 +37,4 @@ const leadersSchema = new Schema({
     
 });
 
-const Leaders = mongoose.model('Leaders', leadersSchema);
-
-module.exports = leadersSchema;
+module.exports = mongoose.model('Leaders', leadersSchema);
