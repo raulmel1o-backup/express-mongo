@@ -27,7 +27,7 @@ leaderRouter.route('/')
 
 })
 
-.post(authenticate.verifyUser, (req, res, next) => {
+.post(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     
     Leaders.create(req.body)
 
@@ -43,14 +43,14 @@ leaderRouter.route('/')
 
 })
 
-.put(authenticate.verifyUser, (req, res, next) => {
+.put(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     
     res.statusCode = 403;
     res.end(`PUT operation not supported on /leaders`);
 
 })
 
-.delete(authenticate.verifyUser, (req, res, next) => {
+.delete(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
 
     Leaders.remove({})
 
@@ -82,14 +82,14 @@ leaderRouter.route('/:leaderId')
 
 })
 
-.post(authenticate.verifyUser, (req, res, next) => {
+.post(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     
     res.statusCode = 403;
     res.end(`POST operation not supported on /Leaders/${req.params.leaderId}`);
 
 })
 
-.put(authenticate.verifyUser, (req, res, next) => {
+.put(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
 
     Leaders.findByIdAndUpdate(req.params.leaderId, {
         $set: req.body,
@@ -106,7 +106,7 @@ leaderRouter.route('/:leaderId')
 
 })
 
-.delete(authenticate.verifyUser, (req, res, next) => {
+.delete(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     
     Dishes.findByIdAndRemove(req.params.leaderId)
 

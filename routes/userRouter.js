@@ -9,7 +9,7 @@ const User = require('../models/users');
 const userRouter = express.Router();
 
 /* GET users listing. */
-userRouter.get('/', async function(req, res, next) {
+userRouter.get('/', authenticate.verifyUser, authenticate.verifyAdmin, async function(req, res, next) {
   
   const users = await User.find({});
 
@@ -76,6 +76,12 @@ userRouter.post('/login', passport.authenticate('local'), (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
   res.json({ success: true, token, status: 'You are successfully logged in!' });
+
+});
+
+userRouter.post('/admin', authenticate.verifyUser, authenticate.verifyAdmin, (req, res) => {
+
+  res.json({ message: 'autenticado caralho' });
 
 });
 
