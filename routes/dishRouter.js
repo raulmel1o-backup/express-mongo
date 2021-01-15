@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const authenticate = require('../utils/authentication');
 
-const Dishes = require('../models/dish');
+const Dishes = require('../models/dishes');
 
 const dishRouter = express.Router();
 
@@ -15,6 +15,8 @@ dishRouter.route('/')
 .get((req,res,next) => {
     
     Dishes.find({})
+
+    .populate('comments.author')
         
     .then(dishes => {
     
@@ -70,6 +72,8 @@ dishRouter.route('/:dishId')
 .get((req,res,next) => {
     
     Dishes.findById(req.params.dishId)
+
+    .populate('comments.author')
     
     .then(dish => {
         
@@ -127,6 +131,8 @@ dishRouter.route('/:dishId/comments')
 
     Dishes.findById(req.params.dishId)
 
+    .populate('comments.author')
+
     .then(dish => {
 
         if (dish) {
@@ -156,13 +162,23 @@ dishRouter.route('/:dishId/comments')
 
         if (dish) {
 
+            req.body.author = req.user._id;
+
             dish.comments.push(req.body);
             dish.save()
             
             .then(dish => {
 
-                res.setHeader('Content-Type', 'application/json');
-                res.status(200).json(dish);
+                Dishes.findById(dish_id)
+                
+                .populate('comments.author')
+                
+                .then(dish => {
+
+                    res.setHeader('Content-Type', 'application/json');
+                    res.status(200).json(dish);
+
+                });
 
             }, err => next(err))
 
@@ -232,6 +248,8 @@ dishRouter.route('/:dishId/comments/:commentId')
 
     Dishes.findById(req.params.dishId)
 
+    .populate('comments.author')
+
     .then((dish) => {
 
         if (dish && dish.comments.id(req.params.commentId)) {
@@ -292,8 +310,16 @@ dishRouter.route('/:dishId/comments/:commentId')
 
             .then((dish) => {
 
-                res.setHeader('Content-Type', 'application/json');
-                res.status(200).json(dish);
+                Dishes.findById(dish_id)
+
+                .populate('comments.author')
+
+                .then(dish => {
+
+                    res.setHeader('Content-Type', 'application/json');
+                    res.status(200).json(dish);
+
+                });
 
             }, (err) => next(err));
 
@@ -332,8 +358,16 @@ dishRouter.route('/:dishId/comments/:commentId')
             
             .then((dish) => {
             
-                res.setHeader('Content-Type', 'application/json');
-                res.status(200).json(dish);
+                Dishes.findById(dish_id)
+
+                .populate('comments.author')
+
+                .then(dish => {
+
+                    res.setHeader('Content-Type', 'application/json');
+                    res.status(200).json(dish);
+
+                });
 
             }, (err) => next(err));
 

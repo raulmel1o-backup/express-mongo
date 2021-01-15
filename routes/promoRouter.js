@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const authenticate = require('../utils/authentication');
 
-const Promotions = require('../models/promotion');
+const Promotions = require('../models/promotions');
 
 const promoRouter = express.Router();
 

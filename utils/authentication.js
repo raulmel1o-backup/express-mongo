@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 
 const config = require('../config/config');
 
-const User = require('../models/user');
+const User = require('../models/users');
 
 exports.local = passport.use(new LocalStategy(User.authenticate()));
 
@@ -41,3 +41,32 @@ exports.jwtPassport = passport.use(new JwtStrategy(opts, (jwtPayload, done) => {
 }));
 
 exports.verifyUser = passport.authenticate('jwt', { session: false });
+
+exports.verifyAdmin =  (req, res, next) => {
+
+    if (!req.user) {
+
+        // const err = new Error('You are not authorized to perform this operation!');
+        const err = new Error('You are not logged in!');
+        err.status = 403;
+
+        return next(err);
+
+    } else {
+
+        if (!req.user.admin) {
+
+            const err = new Error('You are not authorized to perform this operation!');
+            err.status = 403;
+
+            return next(err);
+
+        } else {
+
+            return next();
+
+        }
+
+    }
+
+}

@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const authenticate = require('../utils/authentication');
 
-const Leaders = require('../models/leader');
+const Leaders = require('../models/leaders');
 
 const leaderRouter = express.Router();
 
