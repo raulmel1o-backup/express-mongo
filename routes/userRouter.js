@@ -79,10 +79,4 @@ userRouter.post('/login', passport.authenticate('local'), (req, res) => {
 
 });
 
-userRouter.post('/admin', authenticate.verifyUser, authenticate.verifyAdmin, (req, res) => {
-
-  res.json({ message: 'autenticado caralho' });
-
-});
-
 module.exports = userRouter;

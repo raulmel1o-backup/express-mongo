@@ -14,6 +14,7 @@ const usersRouter = require('./routes/userRouter');
 const dishRouter = require('./routes/dishRouter');
 const leaderRouter = require('./routes/leaderRouter');
 const promoRouter = require('./routes/promoRouter');
+const uploadRouter = require('./routes/uploadRouter');
 
 const url = config.mogoUrl;
 const connect = mongoose.connect(url);
@@ -25,6 +26,12 @@ connect.then(db => {
 }, err => console.log(err));
 
 const app = express();
+
+app.all('*', (req, res, next) => {
+  if (req.secure) return next();
+
+  return res.redirect(307, `http://${req.hostname}:${app.get('secPort')}${req.url}`);
+})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,7 +47,7 @@ app.use(session({
   secret: '12345-67890-09876-54321',
   saveUninitialized: false,
   resave: false,
-  store: new FileStore({logFn: function(){}}),
+  store: new FileStore({ logFn: function(){} }),
 
 }));
 
@@ -54,6 +61,7 @@ app.use('/users', usersRouter);
 app.use('/dishes', dishRouter);
 app.use('/promotions', promoRouter);
 app.use('/leaders', leaderRouter);
+app.use('/imageUpload', uploadRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

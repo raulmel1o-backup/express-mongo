@@ -169,7 +169,7 @@ dishRouter.route('/:dishId/comments')
             
             .then(dish => {
 
-                Dishes.findById(dish_id)
+                Dishes.findById(req.params.dish_id)
                 
                 .populate('comments.author')
                 
@@ -279,14 +279,14 @@ dishRouter.route('/:dishId/comments/:commentId')
 
 })
 
-.post(authenticate.verifyUser,(req, res, next) => {
+.post(authenticate.verifyUser, (req, res, next) => {
 
     res.statusCode = 403;
     res.end(`POST operation not supported on /dishes/${req.params.dishId}/comments/${req.params.commentId}`);
 
 })
 
-.put(authenticate.verifyUser, (req, res, next) => {
+.put(authenticate.verifyUser, authenticate.verifyId, (req, res, next) => {
 
     Dishes.findById(req.params.dishId)
 
@@ -310,7 +310,7 @@ dishRouter.route('/:dishId/comments/:commentId')
 
             .then((dish) => {
 
-                Dishes.findById(dish_id)
+                Dishes.findById(req.params.dish_id)
 
                 .populate('comments.author')
 
@@ -344,7 +344,7 @@ dishRouter.route('/:dishId/comments/:commentId')
     .catch((err) => next(err));
 })
 
-.delete(authenticate.verifyUser, (req, res, next) => {
+.delete(authenticate.verifyUser, authenticate.verifyId, (req, res, next) => {
 
     Dishes.findById(req.params.dishId)
 
@@ -358,7 +358,7 @@ dishRouter.route('/:dishId/comments/:commentId')
             
             .then((dish) => {
             
-                Dishes.findById(dish_id)
+                Dishes.findById(req.params.dish_id)
 
                 .populate('comments.author')
 
