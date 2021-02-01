@@ -3,13 +3,18 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 
 const authenticate = require('../utils/authentication');
+const cors = require('./cors');
 
 const User = require('../models/users');
 
 const userRouter = express.Router();
 
 /* GET users listing. */
-userRouter.get('/', authenticate.verifyUser, authenticate.verifyAdmin, async function(req, res, next) {
+userRouter.route('/')
+
+.options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
+
+.get(cors.cors, authenticate.verifyUser, authenticate.verifyAdmin, async function(req, res, next) {
   
   const users = await User.find({});
 
@@ -19,7 +24,11 @@ userRouter.get('/', authenticate.verifyUser, authenticate.verifyAdmin, async fun
 
 userRouter.use(bodyParser.json());
 
-userRouter.post('/signup', (req, res, next) => {
+userRouter.route('/signup')
+
+.options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
+
+.post(cors.corsWithOptions, (req, res, next) => {
   
   User.register(new User({ username: req.body.username }), req.body.password, (err, user) => {
 
@@ -62,13 +71,17 @@ userRouter.post('/signup', (req, res, next) => {
 
 });
 
-userRouter.get('/login', (req, res, next) => {
+userRouter.route('/login')
+
+.options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
+
+.get(cors.cors, (req, res, next) => {
 
   res.render('login');
 
-});
+})
 
-userRouter.post('/login', passport.authenticate('local'), (req, res) => {
+.post(cors.corsWithOptions, passport.authenticate('local'), (req, res) => {
 
   const token = authenticate.getToken({ _id: req.user._id });
 
