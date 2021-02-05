@@ -92,4 +92,14 @@ userRouter.route('/login')
 
 });
 
+userRouter.route('/facebook/token')
+
+.get(passport.authenticate('facebook-token'), (req, res) => {
+    if (req.user) {
+        const token = authenticate.getToken({ _id: req.user._id });
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).json({success: true, token: token, status: 'You are successfully logged in!'});
+    }
+})
+
 module.exports = userRouter;
