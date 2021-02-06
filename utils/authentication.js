@@ -1,16 +1,16 @@
 const passport = require('passport');
-const LocalStategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken');
-const FacebookTokenStategy = require('passport-facebook-token');
+const FacebookTokenStrategy = require('passport-facebook-token');
 
 const config = require('../config/config');
 
 const User = require('../models/users');
 const Dishes = require('../models/dishes');
 
-exports.local = passport.use(new LocalStategy(User.authenticate()));
+exports.local = passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -122,7 +122,7 @@ exports.verifyId = (req, res, next) => {
     }
 }
 
-exports.facebookPassport = passport.use(new FacebookTokenStategy({
+exports.facebookPassport = passport.use(new FacebookTokenStrategy({
     clientID: config.facebook.clientId,
     clientSecret: config.facebook.clientSecret,
 }, (accessToken, refreshToken, profile, done) => {
